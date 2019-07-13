@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 28
     }
 
     resourcePrefix 'hyperion_app_info_'
@@ -13,7 +13,7 @@ android {
 
 dependencies {
     api "com.willowtreeapps.hyperion:hyperion-plugin:$hyperion_version"
-    implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     annotationProcessor "com.google.auto.service:auto-service:$auto_service_version"
 }
 

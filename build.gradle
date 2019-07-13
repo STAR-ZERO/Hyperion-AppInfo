@@ -5,8 +5,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
-        classpath 'com.novoda:bintray-release:0.8.1'
+        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.novoda:bintray-release:0.9.1'
     }
 }
 
@@ -22,7 +22,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    hyperion_version = '0.9.21'
-    support_library_version = '27.1.0'
+    hyperion_version = '0.9.27'
+    androidx_appcompat_version = '1.0.2'
     auto_service_version = '1.0-rc4'
 }

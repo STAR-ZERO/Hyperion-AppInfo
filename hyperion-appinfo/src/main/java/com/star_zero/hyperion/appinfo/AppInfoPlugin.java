@@ -1,6 +1,6 @@
 package com.star_zero.hyperion.appinfo;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.google.auto.service.AutoService;
 import com.willowtreeapps.hyperion.plugin.v1.Plugin;
