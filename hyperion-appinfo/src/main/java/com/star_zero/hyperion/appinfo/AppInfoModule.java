@@ -20,9 +20,9 @@ public class AppInfoModule extends PluginModule implements View.OnClickListener 
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + getContext().getPackageName()));
-        getContext().startActivity(intent);
+        intent.setData(Uri.parse("package:" + view.getContext().getPackageName()));
+        view.getContext().startActivity(intent);
     }
 }
