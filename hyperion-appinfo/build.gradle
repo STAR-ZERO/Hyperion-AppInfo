@@ -1,11 +1,10 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 30
     }
 
     resourcePrefix 'hyperion_app_info_'
@@ -15,15 +14,4 @@ dependencies {
     api "com.willowtreeapps.hyperion:hyperion-plugin:$hyperion_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     annotationProcessor "com.google.auto.service:auto-service:$auto_service_version"
-}
-
-// $ ./gradlew clean build bintrayUpload -PbintrayUser=star-zero -PbintrayKey=BINTRAY_KEY -PdryRun=false
-publish {
-    userOrg = 'star-zero'
-    groupId = 'com.star_zero'
-    artifactId = 'hyperion-appinfo'
-    publishVersion = '1.1.0'
-    licences = ['MIT']
-    desc = 'Hyperion plugin to show screen of details about an application'
-    website = 'https://github.com/STAR-ZERO/hyperion-appinfo'
 }
