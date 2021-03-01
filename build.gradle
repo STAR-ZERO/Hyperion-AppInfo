@@ -1,10 +1,15 @@
 buildscript {
+    ext.kotlin_version = '1.4.31'
+    ext.hyperion_version = '0.9.30'
+    ext.auto_service_version = '1.0-rc4'
+
     repositories {
         google()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -17,10 +22,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-ext {
-    hyperion_version = '0.9.30'
-    androidx_appcompat_version = '1.2.0'
-    auto_service_version = '1.0-rc4'
 }
