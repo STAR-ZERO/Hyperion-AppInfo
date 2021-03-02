@@ -1,6 +1,11 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'org.jetbrains.dokka'
+    id 'signing'
+    id 'maven-publish'
+}
 
 android {
     compileSdkVersion 30
@@ -14,6 +19,83 @@ android {
 
 dependencies {
     api "com.willowtreeapps.hyperion:hyperion-plugin:$hyperion_version"
-    implementation"org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     kapt "com.google.auto.service:auto-service:$auto_service_version"
+}
+
+group = 'com.star-zero'
+version = '2.0.0'
+
+def sonatypeUsername = rootProject.hasProperty('sonatypeUsername')? rootProject.sonatypeUsername : ''
+def sonatypePassword = rootProject.hasProperty('sonatypePassword')? rootProject.sonatypePassword : ''
+
+dokkaJavadoc {
+    outputDirectory.set(file("$buildDir/javadoc"))
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
+    from android.sourceSets.getByName("main").java.srcDirs
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    archiveClassifier.set("javadoc")
+    from "$buildDir/javadoc"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                artifactId = 'hyperion-appinfo'
+                from components.release
+                artifact javadocJar
+                artifact sourcesJar
+                pom {
+                    name = 'Hyperion AppInfo'
+                    description = 'Hyperion-Android Plugin to show screen of details about an application'
+                    url = 'https://github.com/STAR-ZERO/Hyperion-AppInfo'
+                    licenses {
+                        license {
+                            name = 'The MIT License'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'star_zero'
+                            name = 'Kenji Abe'
+                            email = 'kenji.01.star@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'https://github.com/STAR-ZERO/Hyperion-AppInfo.git'
+                        developerConnection = 'https://github.com/STAR-ZERO/Hyperion-AppInfo.git'
+                        url = 'https://github.com/STAR-ZERO/Hyperion-AppInfo'
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                credentials {
+                    username = "${sonatypeUsername}"
+                    password = "${sonatypePassword}"
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
 }
